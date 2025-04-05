@@ -21,7 +21,7 @@ DigitalOut LEDComunicacion(PC_13);	//LED indicador de comunicación por UART
     
 //------------ Variables públicas -------------------------------------------------------------------
 
-float valorTensión;					//Valor medido de tension
+float valorTension;					//Valor medido de tension
 float valorCorriente;				//Valor medido de corriente
 float valorPotencia;				//Valor calculado de potencia
 float valorFrecuencia;				//Valor calculado de potencia
@@ -30,7 +30,7 @@ float valorCosenoPhi;				//Valor calculado de coseno Phi
 uint periodo;						//Periodo de la señal de tensión (En pulsos de clock)
 uint defasaje;						//Defasaje entre tensión y corriente (En pulsos de clock)
 
-bool adelantaTensión;				//Indica si adelanta tensión (true) o corriente (false)
+bool adelantaTension;				//Indica si adelanta tensión (true) o corriente (false)
 bool crucePorCero;					//Indica si ya ocurrió un cruce por cero, permitiendo calcular el defasaje
 
 //------------ Prototipos de funciones --------------------------------------------------------------
@@ -66,7 +66,7 @@ int main(){
 //Comentario: Las funciones relacionadas a los timers todavía no se implementaron, pero se utilzian las variables de frecuencia y coseno phi
 
 void inicEntradas(){
-	cruceTensión.mode(PullDown);
+	cruceTension.mode(PullDown);
 	cruceCorriente.mode(PullDown);
 }
 
@@ -75,24 +75,54 @@ void inicSalidas(){
 }
 
 void inicVariables(){
-	valorTensión = 0;
+	valorTension = 0;
 	valorCorriente = 0;
 	valorPotencia = 0;
 	valorFrecuencia = 0;
 	valorCosenoPhi = 0;
 	periodo = 0;
 	defasaje = 0;
-	adelantaTensión = true;
+	adelantaTension = true;
 	crucePorCero = false;
 }
 
 void medirTension(){
-	valorTensión = tension*FACTOR_CONV_TENSION;
+	valorTension = tension*FACTOR_CONV_TENSION;
 }
 
 void medirCorriente(){
 	valorCorriente = corriente*FACTOR_CONV_CORRIENTE;
 }
+
+/* PSEUDOCÓDIGO AUN NO IMPLEMENTADO POR QUE NO SE VIERON LOS TEMAS 
+
+//Cuando se realice el cruce por cero de la señal de tensión o de corriente, se disparará la interrupcción por entrada digital
+
+void Interrupcion(){
+	Si (cruceTension == HIGH) {
+ 		Si(crucePorCero == false){
+   			periodo = Valor de timer;
+   			Reinicia el timer;
+      			crucePorCero = true;
+	 		adelantaTension = true;
+      		}Sino{
+			defasaje = Valor de timer;
+   			crucePorCero = False;
+   		}
+ 	}
+	Si (cruceTension == HIGH) {
+ 		Si(crucePorCero == false){
+   			periodo = Valor de timer;
+   			Reinicia el timer;
+      			crucePorCero = true;
+	 		adelantaTension = false;
+      		}Sino{
+			defasaje = Valor de timer;
+   			crucePorCero = False;
+   		}
+ 	}
+}
+FIN DEL PSUDOCÓDIGO*/
 
 calcularVariables(){
 	valorPotencia = valorCorriente*valorTensión;			//Se calcula la potencia 
