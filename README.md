@@ -39,7 +39,7 @@ Perifericos a utilizar:
 - LED2 (Built in LED): Para indicar el grabado de la tarjeta SD
 - USER_BUTTON(Built in): Como Pulsador ara realizar el grabado de la medición actual
 
-![Video de demostración](https://drive.google.com/file/d/1tdw8074xq97-fDzAJOZByrxbPwTC79gV/view?usp=drive_link )
+![Video de demostración](https://drive.google.com/file/d/1tdw8074xq97-fDzAJOZByrxbPwTC79gV/view?usp=sharing)
 
 Diagrama en Bloques:
 
