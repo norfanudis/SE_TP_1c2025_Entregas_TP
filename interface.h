@@ -1,7 +1,7 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#define  LOOPS_BETWEEN_MEASSUREMENTS 3      //Veces que loopea entre actualizaciones de mediciones 
+#define  LOOPS_BETWEEN_MEASSUREMENTS 10     //Veces que loopea entre actualizaciones de mediciones 
 #define  TIME_BETWEEN_UPDATES 1000          //Tiempo entre actualizacion del LCD
 
 // -------------- Funciones publicas ---------------------
@@ -14,6 +14,10 @@ void displayTime(void);
 
 void interfaceUpdate(void);
 
-void displayValues(float, float);
+void displayValues(float, float, float, float);
+
+void displayTimeAndPower(float, float);
+
+void userButtonInterrupt();
 
 #endif
