@@ -35,7 +35,7 @@ static float meassurePeakVoltage(){
     }
     peakVoltage -=0.5;                  //Le resta la tension de offset de la señal
     peakVoltage *= VOLTAGE_CONV_FACTOR; //lo multiplica por el factor de conversión
-    return peakVoltage/ROOT_2;          //Por ultimo lo convierte en tension RMS
+    return peakVoltage;          //Por ultimo lo convierte en tension RMS
 }
 
 static float meassurePeakCurrent(){     //mismo procedimiento que la medicion de tensión 
@@ -50,5 +50,5 @@ static float meassurePeakCurrent(){     //mismo procedimiento que la medicion de
     }
     peakCurrent -= 0.5;
     peakCurrent *= CURRENT_CONV_FACTOR;
-    return peakCurrent/ROOT_2;
+    return peakCurrent;
 }

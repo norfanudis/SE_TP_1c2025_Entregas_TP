@@ -17,6 +17,7 @@ static void SetDateAndTime();
 void comunUSBInit(void){
     comunicationIndicator = OFF;    //Apaga el indicador de comunicación
     SetDateAndTime();               //Setea el tiempo via consola
+    
 }
 
 void floatToString(char* str, float value, int integer, int decimal){   //Convierte un numero float en un string
@@ -38,10 +39,10 @@ void floatToString(char* str, float value, int integer, int decimal){   //Convie
 
 
 void printToUSB(const char* str){
-    comunicationIndicator = ON;             //Enciende el led indicador
+    comunicationIndicator = !comunicationIndicator;             //Enciende el led indicador
     uartUsb.write( str, strlen(str) );      //Escribe el mensaje en la consola 
     delay(COMMUNICATION_LED_ON);
-    comunicationIndicator = OFF;            //Luego del delay, apaga el led
+    comunicationIndicator = !comunicationIndicator;            //Luego del delay, apaga el led
 }
 
 

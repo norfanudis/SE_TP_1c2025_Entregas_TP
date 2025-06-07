@@ -9,4 +9,4 @@ int main(void){
         interfaceUpdate();  //En el loop, actualiza las interfaces y las variables internas
     }
 }
-
+                      
