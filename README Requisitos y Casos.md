@@ -8,7 +8,7 @@ Imagen FIUBA
 
 **Padrón: 102410**
 
-**Fecha: 2do cuatrimestre 2024**
+**Fecha: 1er cuatrimestre 2025**
 
  
 ### **1\. Selección del proyecto a implementar**
