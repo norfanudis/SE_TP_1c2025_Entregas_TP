@@ -9,6 +9,7 @@
 #include "TextLCD.h"
 #include "RTC.h"
 #include "sd_card.h"
+#include "HC06.h"
 
 
 // Objetos publicos
@@ -18,12 +19,13 @@ TextLCD lcd(D7,D0,D2,D6,D9,D8, TextLCD::LCD16x2);   //Declaración de los pines 
 // Variables privadas
 static int timesLooped = 0;         //Variable que cuenta las veces loopeadas para medir las entradas
 
-InterruptIn sdCardSave(USER_BUTTON);                    //Interrupción del pulsador OnBoard
+Ticker sdCardSave;                    //Interrupción del pulsador OnBoard
 
 typedef enum {                                          //Tipo enum para la Maquina de estados fiitos
     DISPLAY_INITIAL_MESSAGE,
     DISPLAY_VALUES,
-    DISPLAY_TIME_AND_POWER,
+    DISPLAY_POWER,
+    DISPLAY_TIME_AND_DATE,
     SAVE_TO_SD
 } interfaceState_t;
 
@@ -35,9 +37,9 @@ void interfaceInit(void){
     lcd.cls();                      //Comienza con el LCD en blanco
     timingInit();                   //Inicializa el módulo de timers
     sdCardInit();                   //Inicializa la SD
-    sdCardEraseFile(FILE_NAME);     //Reinicia el archivo
+    HC06Init();
     interfaceState = DISPLAY_VALUES;
-    sdCardSave.rise(&userButtonInterrupt);  //Interrupción de flanco ascendente del pulsador Onboard
+    sdCardSave.attach(&sdCardtimer,10s);
 }
 
 void interfaceUpdate(void){        
@@ -49,14 +51,23 @@ void interfaceUpdate(void){
         case DISPLAY_VALUES:                                //Estado de muestra de variables
             timesLooped++;
             displayValues(getVoltage(),getCurrent(), getFrequency(), getPhase());   //Actualiza los valores de tensión y corriente
-            if(timesLooped >= LOOPS_BETWEEN_MEASSUREMENTS){ //Si lo actualizó una cantida de veces definida
+            if(timesLooped >= SCREEN_UPDATES_VALUES){ //Si lo actualizó una cantida de veces definida
                 timesLooped = 0;                            //resetea la variable de conteo
-                interfaceState = DISPLAY_TIME_AND_POWER;    //Y pasa al estado de mostrar potencia y tiempo
+                interfaceState = DISPLAY_TIME_AND_DATE;    //Y pasa al estado de mostrar potencia y tiempo
                 }
             break;
-        case DISPLAY_TIME_AND_POWER:
-            displayTimeAndPower(getVoltage(),getCurrent()); 
-            interfaceState = DISPLAY_VALUES;                //Vuelve a mostrar los valores de tension, corriente, etc.. 
+        case DISPLAY_TIME_AND_DATE:
+            displayTimeAndDate(); 
+            interfaceState = DISPLAY_POWER;                //Vuelve a mostrar los valores de tension, corriente, etc.. 
+            break;
+        case DISPLAY_POWER:
+            timesLooped++;
+            displayPowerValues(getVoltage(),getCurrent(), getPhase());   //Actualiza los valores de tensión y corriente
+            if(timesLooped >= SCREEN_UPDATES_POWER){ //Si lo actualizó una cantida de veces definida
+                timesLooped = 0;                            //resetea la variable de conteo
+                interfaceState = DISPLAY_VALUES;    //Y pasa al estado de mostrar potencia y tiempo
+                HC06SendValues(getVoltage(),getCurrent(), getFrequency(), getPhase());
+                }
             break;
         case SAVE_TO_SD:
             sdCardWriteLog(getVoltage(),getCurrent(), getFrequency(), getPhase());
@@ -64,6 +75,14 @@ void interfaceUpdate(void){
             break;
     }
     delay(TIME_BETWEEN_UPDATES);                            //Tiempo entre refrescos
+}
+
+void lcdInit(){                     //Imprime el mensaje inicial para cargar la hora por consola
+    lcd.cls();      
+    lcd.locate(0,0);
+    lcd.printf("Ingrese la hora ");
+    lcd.locate(0,1);
+    lcd.printf("via la consola");
 }
 
 void displayValues(float voltage, float current, float frequency, float phase){
@@ -91,36 +110,51 @@ void displayValues(float voltage, float current, float frequency, float phase){
 
 }
 
-void lcdInit(){                     //Imprime el mensaje inicial para cargar la hora por consola
-    lcd.cls();      
-    lcd.locate(0,0);
-    lcd.printf("Ingrese la hora ");
-    lcd.locate(0,1);
-    lcd.printf("via la consola");
-}
-
-void displayTimeAndPower(float voltage, float current){
-    char str_power[7]="";
-    char values[17]="";
-
-    floatToString(str_power,voltage*current,4,1);
-    sprintf(values,"%s W",str_power);       //Formatea el string para imprimir
-
+void displayTimeAndDate(){
     lcd.cls();
+    lcd.locate(0,0);
     displayTime();
     lcd.locate(0,1);
+    displayDate();
+
+}
+
+void displayPowerValues(float voltage, float current, float phase){
+    char str_power1[17]="";
+    char str_power2[17]="";
+    char values[17]="";
+
+    lcd.cls();
+    lcd.locate(0,0);
+
+    floatToString(str_power1,voltage*current,4,1);
+    sprintf(values,"%s W",str_power1);       //Formatea el string para imprimir
+    lcd.printf(values);
+    
+    floatToString(str_power1,voltage*current*phase,4,0);
+    floatToString(str_power2,voltage*current*sqrt(1-(phase*phase)),4,0);
+
+    sprintf(values,"%sVA %sVAR",str_power1, str_power2);       //Formatea el string para imprimir
     lcd.printf(values);
 }
 
 void displayTime(){                 //Muestra el tiempo en pantalla en el renglon superior
     char current_time[12]="";
 
-    lcd.locate(0,0);
     RTCGetTime(current_time);       //Solicita el tiempo como string
     lcd.printf(current_time);
 }
 
+void displayDate(){
+    char current_date[12]="";
 
-void userButtonInterrupt(){
-    interfaceState = SAVE_TO_SD;    //Cambia la variable de la maquina de estados finita
+    RTCGetDate(current_date);       //Solicita el tiempo como string
+    lcd.printf(current_date);
+}
+
+
+void sdCardtimer(){
+    if(sdCardInserted()){
+        interfaceState = SAVE_TO_SD;    //Cambia la variable de la maquina de estados finita
+    }
 }

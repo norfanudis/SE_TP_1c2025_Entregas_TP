@@ -29,16 +29,21 @@ DigitalOut sdWriteIndicator(LED2);                              //Led indicador 
 // Variables privadas
 
 static char systemBuffer[SDCARD_LINES_TO_PRINT*SDCARD_LINE_SIZE];
+char extension[5] = ".txt";
 
 //Implementación de funciones publicas
 
 bool sdCardInit(){   
+
     //sdWriteIndicator = OFF;
     printToUSB("Iniciando tarjeta SD \r\n");
     fs.mount(&sd);
     DIR *dir = opendir("/sd/");
     if ( dir != NULL ) {
         printToUSB("Tarjeta SD encontrada!. \r\n");
+        printToUSB("Introduzca extensón de los archivos (.txt por defecto):  \r\n");
+        comunUSBStringRead( extension, 4);
+        printToUSB("\r\n");
         closedir(dir);
         return true;
     } else {
@@ -55,6 +60,7 @@ bool sdCardWriteFile( const char* fileName, const char* writeBuffer ){
     fileNameSD[0] = '\0';
     strcat( fileNameSD, "/sd/" );
     strcat( fileNameSD, fileName );
+    strcat( fileNameSD, extension);
 
     FILE *fd = fopen( fileNameSD, "a" );
 
@@ -70,11 +76,21 @@ bool sdCardWriteFile( const char* fileName, const char* writeBuffer ){
     }
 }
 
+bool sdCardInserted(){
+    DIR *dir = opendir("/sd/");
+    if ( dir != NULL ) {
+        closedir(dir);
+        return true;
+    }
+    return false;
+}
+
 bool sdCardEraseFile(const char* fileName){
     char fileNameSD[SD_CARD_FILENAME_MAX_LENGTH+4];
     fileNameSD[0] = '\0';
     strcat( fileNameSD, "/sd/" );
     strcat( fileNameSD, fileName );
+    strcat( fileNameSD, extension);
 
     FILE *fd = fopen( fileNameSD, "w" );
     if ( fd != NULL ) {
@@ -92,6 +108,7 @@ bool sdCardReadFile( const char* fileName, char * readBuffer, int readBufferSize
     fileNameSD[0] = '\0';
     strcat( fileNameSD, "/sd/" );
     strcat( fileNameSD, fileName );
+    strcat( fileNameSD, extension);
     
     FILE *fd = fopen( fileNameSD, "r" );
     
@@ -125,6 +142,7 @@ void sdCardWriteLog(float voltage, float current, float frequency, float phase){
     char fileName[SD_CARD_FILENAME_MAX_LENGTH]=FILE_NAME;
     char logLine[SDCARD_LINE_SIZE];
     char current_time[12]="";
+    char current_date[12]="";
 
     char str_voltage[6]="";
     char str_current[6]="";
@@ -137,9 +155,10 @@ void sdCardWriteLog(float voltage, float current, float frequency, float phase){
     floatToString(str_phase,phase,1,3);
 
     RTCGetTime(current_time);
+    RTCGetDate(current_date);
 
-    sprintf(logLine,"%s: %s V, %s A, %s Hz, %s \n", current_time, str_voltage, str_current, str_frequency, str_phase);
-
+    sprintf(logLine,"%s %s: %s V, %s A, %s Hz, %s \n",current_date, current_time, str_voltage, str_current, str_frequency, str_phase);
+    
     if ( !sdCardWriteFile( fileName,logLine ) ){
         printToUSB("Ocurrió un error inesperado\n");
     }

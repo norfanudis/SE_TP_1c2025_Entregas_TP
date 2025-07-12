@@ -14,9 +14,15 @@ void RTCGetTime(char* RTCTime){
 }
 
 
+void RTCGetDate(char* RTCDate){
+    time_t epochSeconds = time(NULL);                   //Toma el tiempo del sistema
+    struct tm *rtc_info = localtime(&epochSeconds);     //Lo transforma en un struct rm
+    if(rtc_info!=NULL){                                 //Si devuelve un valor correcto, toma la informacion de hora, minutos y segundos 
+        sprintf(RTCDate,"%02i/%02i/%04i", rtc_info->tm_mday, rtc_info->tm_mon+1,rtc_info->tm_year+1900);    //y lo formatea en un string
+    }
+}
 
-
-void RTCSetTime( int year, int month, int day, int hour, int minute, int second ){
+void RTCSetTimeAndDate( int year, int month, int day, int hour, int minute, int second ){
     struct tm rtcTime;
 
     rtcTime.tm_year = year - 1900;                      //Toma cada valor que se le envia a la funcion 
