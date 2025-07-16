@@ -1,4 +1,4 @@
-# SE_TP3_1c2025
+# SE_TPFinal_1c2025
 
 ## Título: Sistema de monitoreo Eléctrico
 
@@ -6,7 +6,7 @@
 
 ### Padrón: 102410
 
-### Objetivo: Desarrollar un sistema que mida y comunique por display el consumo eléctrico y la hora actual
+### Objetivo: Desarrollar un sistema que mida y comunique por display y por aplicación celular el consumo eléctrico y la hora actual
 
 
 ## Descripción:
@@ -16,11 +16,12 @@ El sistema se encontrará conectado a la red eléctrica domiciliaria con la inte
 
 En este se incluirán dispositivos que permitan realizar una medición aislada de las variables de interes, tanto la corriente, tensión y frecuencia, como tambien el coseno $\phi$, importante a la hora de medir el consumo activo, reactivo y total de potencia.
 
-Las mediciones se realizan y procesan en tiempo real, las cuales se muestran en un display LCD de 16x2 junto con la hora actual, configurada inicialmente via consola. El programa sigue un flujo bastante simple, observado en la Maquina de estados que se encuentra a continuación:
+Las mediciones se realizan y procesan en tiempo real, las cuales se muestran en un display LCD de 16x2 junto con la hora actual, configurada inicialmente via consola. Adicionalmente, las variables medidas y calculadas se enviarán via Bluetooth a una aplicación celular desarrollada en el entorno [MIT App Inventor](https://appinventor.mit.edu/). El programa sigue un flujo bastante simple, observado en la Maquina de estados que se encuentra a continuación:
 
 Maquina de Estados Finitos 
 
-![Maquina de estados Finitos](https://github.com/user-attachments/assets/8ddaffff-9a58-4a25-ae2f-aa091b65a6a5)
+<img width="1152" height="622" alt="imagen" src="https://github.com/user-attachments/assets/53363d63-a576-4936-8adc-d2400d35f35a" />
+
 
 
 La tensión de entrada se rectificará y reducirá a un nivel admisible para luego ser medida por un optoacoplador, la cual se enciará al microcontrolador. Por otro lado, la medición de corriente se realizará mediante el dispositivo [ASC712](https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.ashx) que, utilizando el [Efecto Hall](https://es.wikipedia.org/wiki/Efecto_Hall) permite realizar una medición (También aislada de la red) de la corriente.
@@ -35,12 +36,10 @@ Perifericos a utilizar:
 - D7, D0, D2, D6, D9, D8 como interfaz de comunicación con el display LCD16x2
 - D14, D15 Como los detectores de cruce por cero
 - PC10, PC11, PC12, PA4: Interfaz SPI para el módulo SD
-- LED1 (Built in LED): Para indicar que se está realizando la comunicación por UART
-- LED2 (Built in LED): Para indicar el grabado de la tarjeta SD
-- USER_BUTTON(Built in): Como Pulsador ara realizar el grabado de la medición actual
+- PD5, PD6 (UART2): Interfaz de comunicación con módulo HC06
 
-[Video de demostración](https://drive.google.com/file/d/1tdw8074xq97-fDzAJOZByrxbPwTC79gV/view?usp=sharing)
+[Video de demostración](https://drive.google.com/file/d/1sq7Mj2O91dZLGVSDQ7my_pVvpUdaSsIS/view?usp=sharing)
 
 Diagrama en Bloques:
 
-![Diagrama en bloques](https://github.com/user-attachments/assets/d889034b-d62c-4e3e-9be8-2a3a255e05f6)
+<img width="1055" height="391" alt="imagen" src="https://github.com/user-attachments/assets/cff5d478-5585-4b47-9231-c4836b922de8" />
