@@ -404,7 +404,7 @@ En esta sección se mostrarán los esquematicos de los distintos módulos mencio
 
 El diseño del sensor de corriente se muestra a continuación:
 
-
+<img width="802" height="512" alt="imagen" src="https://github.com/user-attachments/assets/be0b1ba1-7ded-4df0-bd37-4407fd15bacf" />
 
 Donde se observa la conexión a la carga a monitorear a la izquierda, junto con la salida analógica y alimentación por la derecha. El microcontrolador elegido automaticamente convierte la señal senoidal de la entrada a una señal analogica proporcional al valor de corriente, centrada en 3.3V/2.
 
@@ -412,7 +412,7 @@ Donde se observa la conexión a la carga a monitorear a la izquierda, junto con 
 
 En el caso del módulo de tensión:
 
-
+<img width="678" height="336" alt="imagen" src="https://github.com/user-attachments/assets/37be91e9-d381-4557-8469-d0e9efd5b467" />
 
 Se puede observar el rectificador en la entrada del optoacoplador, permitiendo el correcto funcionamiento del mismo, juto con la salida nalógica aisalda. En este caso, la señal entregada es un hemiciclo de la señal senoidal utilziada para alimentar la carga, y con valor "medio" de la señal original en 0.
 
@@ -420,7 +420,7 @@ Se puede observar el rectificador en la entrada del optoacoplador, permitiendo e
 
 Debido a las distintas implementaciones de los sensores de tensión y corriente, se requieren leves diferencias en los circuitos de comparación para otener señales apropiadas a los cruces por cero:
 
-
+<img width="501" height="476" alt="imagen" src="https://github.com/user-attachments/assets/1f5d7519-3b58-4dc5-9afa-e80cd82838a0" />
 
 En el caso del comparador de corriente, se compara con la mitad del valor de alimentación, teniendo un valor positivo a la salida en el hemiciclo positivo de la corriente y 0 en el hemiciclo negativo. En el caso de la tensión, simplemente se compara con un valor levemente superior a 0. 
 
@@ -430,28 +430,30 @@ El comparador elegido es el [MCP6002](https://ww1.microchip.com/downloads/aemDoc
 
 Para los módulos comericales como el de la tarjeta SD, el display y el módulo bluetooth, simplemente alcanza con realizar las conexiones adecuadas a los puertos correspondientes del microcontrolador. En el caso del móludo SD, la interfaz SPI:
 
-
+<img width="409" height="309" alt="imagen" src="https://github.com/user-attachments/assets/040a3fdb-a171-49ae-9444-9b8819d43ffb" />
 
 ## **3.1.5 Diseño del módulo LCD 16x2** 
 
 Para el LCD, es necesario realizar las conexiones de los 4 bits de datos (D7 a D4) los pines RW, E y las alimentaciones, junto con un potenciometro para modificar el brillo del display.
 
-
+<img width="634" height="533" alt="imagen" src="https://github.com/user-attachments/assets/75a3de41-6567-4e09-9ee4-f96bfb301d37" />
 
 ## **3.1.6 Diseño del módulo Bluetooth** 
 
 De forma similar a los anteriores, se realizan las conexiones correspondientes a los pines del microcontrolador, ene ste caso con protocolo UART.
 
+<img width="452" height="245" alt="imagen" src="https://github.com/user-attachments/assets/29930976-ef54-41af-be78-4699cadee40d" />
 
 
 ## **3.1.7 Diseño del hardware con la placa NUCLEO-F429ZI** 
 
 Uniendo todos estos módulos, se realiza el esquematico completo, integrando el microcontrolador, que tambien es el que provee la alimentación al circuito.
 
+<img width="483" height="897" alt="imagen" src="https://github.com/user-attachments/assets/4bca810f-f257-48d9-8191-4d57b464bdb8" />
 
+En base al esquematico, podemos realizar una especie de "shield" para el microcontrolador:
 
-En bse al esquematico, podemos realizar una especie de "shield" para el microcontrolador:
-
+<img width="759" height="539" alt="imagen" src="https://github.com/user-attachments/assets/d6e62dbf-cf5e-4406-8fb8-5366465629db" />
 
 ## **3.2 Diseño del Firmware** 
 
@@ -461,10 +463,11 @@ A continuación se describen las distintas secciones del software, separado en s
 
 Comenzando por los módulos de corriente y tensión, el archivo *meassurements.cpp* consiste en dos declaraciones de entradas analógicas, una para cada señal, y dos funciones para obtener dichos valores.
 
-
+<img width="596" height="499" alt="imagen" src="https://github.com/user-attachments/assets/05c90af3-65a5-4d0d-b994-2dfa738644aa" />
 
 En las funciones privadas, se puede observar como se realizan las mediciones:
 
+<img width="886" height="648" alt="imagen" src="https://github.com/user-attachments/assets/a8a37fb8-d9b1-4414-a1e3-ec4ea2c6f017" />
 
 En estas se muestrea la entrada por 40ms para garantizar que se obtiene al menos 1 máximo de la señal. Obtenido el máximo, se lo multiplica por un factor de conversión definido por las conversiones realizadas.
 
@@ -472,11 +475,11 @@ En estas se muestrea la entrada por 40ms para garantizar que se obtiene al menos
 
 En el módulo *timing.cpp* se tienen las entradas digitales de los cruces por cero de la tensión y de la corriente, a las cuales se las declara como interrupciones por flanco ascendente en la inicialización, como tambien un _timer_ que servirá para medir las distancias de tiempo entre pulsos.
 
-
+<img width="574" height="838" alt="imagen" src="https://github.com/user-attachments/assets/2781d5e5-5305-41f5-919c-649d019ac565" />
 
 Para calcular los valores de frecuencia, utilizamos una función privada que, comienza almacenando el tiempo transcurrido entre pulsos, seguido de evaluar si ya ocurrió una interrupción. Esto último sirve para diferenciar entre una medición entre dos pulsos de una misma señal, o de una señal con la otra. Esta implementación asume que ambas señales tiene misma frecuencia, en caso de que esto no sea cierto, la medición será erronea edbido a un efecto de barrido.
 
-
+<img width="755" height="200" alt="imagen" src="https://github.com/user-attachments/assets/afc7e57b-11fa-484f-9d46-9977e2b57cbd" />
 
 Con el valor de la duración entre pulsos, se calcula la frecuencia a partir del perido, o el coseno del angulo entre las fases.
 
@@ -484,17 +487,20 @@ Con el valor de la duración entre pulsos, se calcula la frecuencia a partir del
 
 Esta sección de código contiene tres funciones, una que setea la fecha y hora ingresada previamente por el usuario, una que devuelve la hora actual y la última que devuelve la fecha actual, ambas formateadas apropiadamente.
 
-
+<img width="974" height="766" alt="imagen" src="https://github.com/user-attachments/assets/32057246-163c-47a4-9cdd-97314388fcc8" />
 
 ## **3.2.4 Módulo SD** 
 
 La implementación del código para el módulo SD consiste en principio en la declaración del puerto SPI para la comunicación, el tipo de archivo. Luego, en la funcion de incialización, se intenta montar la tarjeta SD y crear un directorio, si esto resulta exitoso, se elimina el directorio y retorna _true_. En caso que ocurra un error, sele da aviso al usuario y retorna _false_.
 
-
+<img width="795" height="657" alt="imagen" src="https://github.com/user-attachments/assets/a6b70d9d-ae0b-4d8b-8c3e-2c8593896342" />
+<img width="598" height="404" alt="imagen" src="https://github.com/user-attachments/assets/f4219575-8f59-41d4-a4aa-77500c91ece9" />
 
 Las funciones de lectura y escritura y borrado consisten en abrir el archivo deseado, verificar que no ocurrió un error, y leerlo, modificarlo o eliminarlo según correspona, en algunos casos mediante un buffer.
 
-
+<img width="561" height="835" alt="imagen" src="https://github.com/user-attachments/assets/1ad19180-8c3c-48a2-9b6c-a2d7ea859540" />
+<img width="535" height="533" alt="imagen" src="https://github.com/user-attachments/assets/7e2b9ec3-0ca2-434c-820d-adfaa779fa21" />
+<img width="825" height="458" alt="imagen" src="https://github.com/user-attachments/assets/63db107b-d3ac-47e1-adfe-709b1311fd12" />
 
 ## **3.2.5 Módulo LCD 16x2** 
 
@@ -504,11 +510,12 @@ Para el módulo LCD, se utilizó la librería [TextLCD](https://os.mbed.com/user
 
 El módulo bluetooth se comporta como una comunicación serial, donde se envían los mensajes que serán recibidos por la aplicación de celular. Cada uno de estos valores se envía con un prefijo que indica el tipo de valor que es, en caso de que se pierda un mensaje.
 
+<img width="740" height="897" alt="imagen" src="https://github.com/user-attachments/assets/4ce46673-7d2f-4176-927a-f667177a095b" />
 
 
 Adicionalmente se implementa una función tipo _ping_ que envia el comando "AT" y se espera recibir la respuesta "OK". En caso de no recibirla, se considera fallido y retorna falso.
 
-
+<img width="725" height="245" alt="imagen" src="https://github.com/user-attachments/assets/8a14e6e8-0965-4628-bb21-e5a97acbc354" />
 
 ## **3.2.7 Firmware Adicional** 
 
@@ -516,20 +523,25 @@ Se tienen dos archivos adicionales, uno que se encarga de la comunicación por c
 
 Comenzando por la interfaz con el usuario, se plantea una máquina de estados finitos que muestra cíclicamente los valores de tensión, corriente, frecuencia y fase por 6 segundos, o 3 refrescos de pantalla, luego muestra la fecha y hora por 2 segundos, y finaliza con mostrar en pantalla los valores de potencia total, activa y reactiva nuevamente por 6 segundos. En este último pasó, adicionalmente, se transmiten los valores actuales de linea por Bluetooth. 
 
+<img width="686" height="784" alt="imagen" src="https://github.com/user-attachments/assets/d756b184-79dd-4ba7-a0a3-b0a4ab44995a" />
+<img width="808" height="624" alt="imagen" src="https://github.com/user-attachments/assets/590ff1c4-a7a6-497d-8998-eb619194af0c" />
 
 
 El resto de las funciones se encargan de mostrar los distintos valores en pantalla, utilizando las distintas funciones del módulo LCD. Finalmente, se utiliza un timer de 10s para realizar el almacenamiento de valores en la tarjeta SD.
 
-
+<img width="700" height="840" alt="imagen" src="https://github.com/user-attachments/assets/d7facf90-349a-4b96-81a2-b0ec756bb947" />
 
 Finalizando con el módulo de comunicación USB, aqui se implementan las funciones de impresión por consola para interactuar con el usuario. Comenzando por la de seteo de fecha y hora, junto con la carga de estos datos al reloj interno
 
+<img width="998" height="650" alt="imagen" src="https://github.com/user-attachments/assets/e926b095-ac1d-4867-937b-af99ae68ac9f" />
 
-Como la de conversión de dato tipo _float_ a string, correctamente formateado
+Como la de conversión de dato tipo _float_ a _string_, correctamente formateado
 
+<img width="789" height="335" alt="imagen" src="https://github.com/user-attachments/assets/e85c0bfd-758f-4270-a3a4-7bfa4822c949" />
 
+Y por último, la de escritura y lectura en consola mediante un buffer de salida
 
-Y por último, la de escritura en consola mediante un buffer de salida
+<img width="878" height="258" alt="imagen" src="https://github.com/user-attachments/assets/822f2708-8c60-4774-bdee-9f0a5d78c6ce" />
 
 ## **3.3 Diseño de la aplicación y comunicación Bluetooth** 
 
@@ -537,12 +549,16 @@ Finalizando con la implementación de software, ahora por fuera de la plataforma
 
 El entorno del [MIT App Inventor](https://appinventor.mit.edu/) consta de una interfaz que nos permite colocar los objetos con los que interactua el usario en la pantalla del dispositivo movil, como botones, etiquetas, etc, a los que luego se le agrega funcionalidad y lógica a traves de la segunda intefaz, donde se importan los distintos atributos de los bloques mencionados previamente.
 
-En el caso de este proyecto, los objetos que se utilizarán son la conexión bluetooth que recibirá los mensajes enviados por el módulo, y etiquetas para mostrar lso distintos valores recibidos.
+En el caso de este proyecto, los objetos que se utilizarán son la conexión bluetooth que recibirá los mensajes enviados por el módulo, y etiquetas para mostrar los distintos valores recibidos.
 
-
-
+<img width="358" height="609" alt="imagen" src="https://github.com/user-attachments/assets/344debff-757c-4842-8788-81a0beefe180" />
 
 En la sección de "código", primero se le permite al usuario seleccionar el dispositivo con el que se quiere conectar y una vez seleccionado establece la conexión. Por otro lado se utiliza un reloj que cada 3,5s verifica si se encuentra conectado a un dispositivo, y si existen datos para recibir. En caso de que si, se recibe el dato y se evalua el prefijo para validar el tipo de variable recibida.
+
+<img width="594" height="750" alt="imagen" src="https://github.com/user-attachments/assets/61f3b96f-b68f-40dd-8d15-457e42dead5b" />
+
+<img width="364" height="775" alt="imagen" src="https://github.com/user-attachments/assets/2621daa0-8a90-4d8d-9a59-f6fd9046e399" />
+
 
 # **CAPÍTULO 4** 
 
@@ -554,7 +570,7 @@ El desarrollo del trabajo se realizó durante el transcurso de 4 meses, donde se
 
 - [README_TP2.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/SE_TP_1c2025_TP2/README.md) : Sensor de corriente y  tensión, Módulo Display 16x2 y RTC
 - [README_TP3.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/Entregas-TP-Final/README.md) : Sensor de frecuncia y fase, Módulo SD
-- [README_TP_FINAL.md]() : Módulo Bluetooth, aplicación celular
+- [README_TP_FINAL.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/Entrega-TP-Final-Rev1/README.md) : Módulo Bluetooth, aplicación celular
 
 ## **4.2 Cumplimiento de requisitos**  
 
