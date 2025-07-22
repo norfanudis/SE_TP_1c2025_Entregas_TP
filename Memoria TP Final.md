@@ -93,15 +93,15 @@ Estre proyecto le permite al usuario tener mejor control sobre los consumos elé
 
 ## **1.1 Análisis de necesidad y objetivos** 
 
-Con el constante crecimiento de la tecnolgía, y el aumento continuo de consumo energértico por persona en la sociedad moderna, las empresas que proveen esta energía se encuentran obligadas a realizar una discretización mas fina de los distintos tipos de consumidores, incluso imponiendo impuestos o tarifas elevadas si se supera un cierto consumo preestablecido o si se supera cierto tipo de energía consumida. Debido a eso, uno como usuario le gustaría (o en ciertos casos se encuentra obligado) a verificar periodicamente estos consumos y variables eléctricas.
+Con el constante crecimiento de la tecnolgía, y el aumento continuo de consumo energético por persona en la sociedad moderna, las empresas que proveen esta energía se encuentran obligadas a realizar una discretización mas fina de los distintos tipos de consumidores, incluso imponiendo impuestos o tarifas elevadas si se supera un cierto consumo preestablecido o si se supera cierto tipo de energía consumida. Debido a eso, uno como usuario le gustaría (o en ciertos casos se encuentra obligado) a verificar periodicamente estos consumos y variables eléctricas.
 
 Esta recolección de datos no resulta tan simple como parece, debido a las distintas formas de medición que se requieren, junto con la periodicidad de estas mediciones. Para ello, se requiere un dispositivo diseñado especialmente para obtener, analizar y comunicar estas mediciones, permitiendo así que el usuario pueda tomar una decisión informada de las acciones a realizar para decrementar el consumo o corregir consumos excesivos.
 
-Adicionalmente se desea que este relevamiento de datos se pueda realizar de forma práctica y cómoda para el usuario, y por supuesto, de forma continua. También resulta de utilidad almacenar esta información de forma no volatil para su utilización en informes o análisis en un tiepo mas extendido.
+Adicionalmente se desea que este relevamiento de datos se pueda realizar de forma práctica y cómoda para el usuario, y por supuesto, de forma continua. También resulta de utilidad almacenar esta información de forma no volatil para su utilización en informes o análisis en un tiempo mas extendido.
 
-Este tipo de productos no son una novedad, se encuentran comercialmente en distintos rangos de funcionamiento, para distintos entornos de consumo eléctrico y con diferencias sustanciales entre ellos. El primer ejemplo es un producto como el [MM2D-65](https://mail.bawelectric.com/imagenes/contenidos/2023-08/283-mm2d-65-manual.pdf) que realiza la medición de las variables mencionadas, pero no admite comunicación a internet o almacenamiento de datos en memorias externas, solo muestra los datos en una pantalla integrada. Estos se encuentran en el rango de los AR$45.000 y AR$65.000
+Este tipo de productos no son una novedad, se encuentran comercialmente en distintos rangos de funcionamiento, para distintos entornos de consumo eléctrico y con diferencias sustanciales entre ellos. El primer ejemplo es un producto como el [MM2D-65](https://mail.bawelectric.com/imagenes/contenidos/2023-08/283-mm2d-65-manual.pdf) que realiza la medición de las variables mencionadas, pero no admite comunicación a internet o almacenamiento de datos en memorias externas, solo muestra los datos en una pantalla integrada. Estos se encuentran en el rango de los AR$ 45.000 y AR$ 65.000
 
-Otro producto mas complejo, ahora si con comunicación via wifi, LAN o bluetooth es el [EM-50](https://www.digitalbaytech.com/es/products/shelly-pro-em-50-smart-din-rail-2-channel-single-phase-energy-meter-wi-fi-lan-and-bluetooth-connection?utm_content=&utm_term=&gad_source=1&gad_campaignid=20122675672&gbraid=0AAAAApF22wW701be59viJB4lXsergzUJo&gclid=EAIaIQobChMIh5LrgordjQMVip5aBR2niQFREAQYASABEgJ2bfD_BwE) de Shelly, con un costo de US$81.49 permite el monitoreo remoto de la red eléctrica monofásica. A diferencia del proyecto, o del ejemplo de BAW, este no cuenta con pantalla para leer los datos en tiempo real, pero si cuenta con memoria interna de hasta 60 días para guardar las mediciones.
+Otro producto mas complejo, ahora si con comunicación via Wi-Fi, LAN o bluetooth es el [EM-50](https://www.digitalbaytech.com/es/products/shelly-pro-em-50-smart-din-rail-2-channel-single-phase-energy-meter-wi-fi-lan-and-bluetooth-connection?utm_content=&utm_term=&gad_source=1&gad_campaignid=20122675672&gbraid=0AAAAApF22wW701be59viJB4lXsergzUJo&gclid=EAIaIQobChMIh5LrgordjQMVip5aBR2niQFREAQYASABEgJ2bfD_BwE) de Shelly, con un costo de US$ 81,49 permite el monitoreo remoto de la red eléctrica monofásica. A diferencia del proyecto, o del ejemplo de BAW, este no cuenta con pantalla para leer los datos en tiempo real, pero si cuenta con memoria interna de hasta 60 días para guardar las mediciones.
 
 En este proyecto se realizará una combinación de estos dos últimos, donde se tendrán las mediciones de tesión, corriente, frecuencia y fase, y en base a esas se realizará el calculo de las potencias real, activa y reactiva. Seguido de un display donde se mostrarán estos datos, y un módulo SD donde serán almacenados, y finalizando con un módul bluetooth que permita relevar estos datos a distancia.
 
@@ -336,7 +336,7 @@ A continuación se mencionará una breve descripción de los módulos utilizados
 
 ## **2.3.1 Alimentación**
 
-El sistema se alimenta mediante los bornes de alimentación de la placa de desarrollo Nucleo-F429ZI la cual se alimenta del USB utilziado para la comunicación por consola. Se utilzan los rieles de 3.3V para los módulos de tensión y corriente, el de frecuencia y fase y el de tarjeta SD. Por otro lado, se utiliza el riel de alimentación de 5V para el módulo LCD y el módulo Bluetooth.
+El sistema se alimenta mediante los bornes de alimentación de la placa de desarrollo Nucleo-F429ZI la cual se alimenta del USB utilizado para la comunicación por consola. Se utilizan los rieles de 3,3 V para los módulos de tensión y corriente, el de frecuencia y fase y el de tarjeta SD. Por otro lado, se utiliza el riel de alimentación de 5 V para el módulo LCD y el módulo Bluetooth.
 
 Se tomó especial cuidado para verificar que la suma de los consumos de los distintos módulos no supere la salida máxima admisible por la placa de desarrollo. 
 
@@ -355,7 +355,7 @@ El integrado cuenta con variantes para corrientes alternas o continuas positivas
 
 ## **2.3.4 Sensor de Tensión** 
 
-Para el sensor de tensión se utilzió una técnica similar al de corriente, donde la salida de tensión proporcional a la tensión en la entrada se encuentra aislada de esta. En este caso se realizó con un optoacoplador, donde la tensión de entrada es rectificada y ajustada a valores apropiados para el optoacoplador elegíd. En este caso el (PC817)[https://www.farnell.com/datasheets/73758.pdf]. 
+Para el sensor de tensión se utilizó una técnica similar al de corriente, donde la salida de tensión proporcional a la tensión en la entrada se encuentra aislada de esta. En este caso se realizó con un optoacoplador, donde la tensión de entrada es rectificada y ajustada a valores apropiados para el optoacoplador elegíd. En este caso el (PC817)[https://www.farnell.com/datasheets/73758.pdf]. 
 
 
 ## **2.3.5 Sensor de frecuencia y fase** 
@@ -372,17 +372,17 @@ Este se encuentra ya integrado dentro del microcontrolador, y se utilizan cierta
 
 ## **2.3.7 Módulo SD** 
 
-Para el módulo SD se consideró uno disponible comercialmente que hace uso del protocolo SPI para almacenar los datos en una memoria no volatil. Dentro del módulo se encuentra un 'Level -shifter' que permite ser utilziado  con microcontroladores que funcionan a 5V.
+Para el módulo SD se consideró uno disponible comercialmente que hace uso del protocolo SPI para almacenar los datos en una memoria no volatil. Dentro del módulo se encuentra un 'Level -shifter' que permite ser utilizado  con microcontroladores que funcionan a 5 V.
 
 <img width="484" height="367" alt="imagen" src="https://github.com/user-attachments/assets/1b17e924-01ed-47af-956a-63283ad3710c" />
 
 ## **2.3.8 Módulo LCD 16x2** 
 
-Otro módulo que tambien resulta disponible comercialmente es el display LCD de 16x2 caracteres. Es un módulo ampliamente utilziado y documentado en infinidad de proyectos, ya que resulta muy facul de utilizar y extremadamente versatil, permitiendo observar datos actuales de un programa en tiempo real.
+Otro módulo que tambien resulta disponible comercialmente es el display LCD de 16x2 caracteres. Es un módulo ampliamente utilizado y documentado en infinidad de proyectos, ya que resulta muy facul de utilizar y extremadamente versatil, permitiendo observar datos actuales de un programa en tiempo real.
 
 <img width="492" height="380" alt="imagen" src="https://github.com/user-attachments/assets/49188155-235b-4bae-b4c7-e0957fe90444" />
 
-Una de sus limitaciones resulta la escasa cantidad de caracteres disponibles, algo de mucha importancia en este proyecto debido a la cantidad de información a mostrar. Para ello se utilziaron 'pantallas', en las cuales muestran una cantidad de datos por unos segundos, luego en otra pantalla otros datos, y así sucesivamente. Esta técnica será explorada mas en profundidad en la sección de Firmware del módulo. 
+Una de sus limitaciones resulta la escasa cantidad de caracteres disponibles, algo de mucha importancia en este proyecto debido a la cantidad de información a mostrar. Para ello se utilizaron 'pantallas', en las cuales muestran una cantidad de datos por unos segundos, luego en otra pantalla otros datos, y así sucesivamente. Esta técnica será explorada mas en profundidad en la sección de Firmware del módulo. 
 
 ## **2.3.9 Módulo Bluetooth** 
 
@@ -406,7 +406,7 @@ El diseño del sensor de corriente se muestra a continuación:
 
 <img width="802" height="512" alt="imagen" src="https://github.com/user-attachments/assets/be0b1ba1-7ded-4df0-bd37-4407fd15bacf" />
 
-Donde se observa la conexión a la carga a monitorear a la izquierda, junto con la salida analógica y alimentación por la derecha. El microcontrolador elegido automaticamente convierte la señal senoidal de la entrada a una señal analogica proporcional al valor de corriente, centrada en 3.3V/2.
+Donde se observa la conexión a la carga a monitorear a la izquierda, junto con la salida analógica y alimentación por la derecha. El microcontrolador elegido automaticamente convierte la señal senoidal de la entrada a una señal analogica proporcional al valor de corriente, centrada en 3,3 V/2.
 
 ## **3.1.2 Diseño del sensor de Tensión** 
 
@@ -414,7 +414,7 @@ En el caso del módulo de tensión:
 
 <img width="678" height="336" alt="imagen" src="https://github.com/user-attachments/assets/37be91e9-d381-4557-8469-d0e9efd5b467" />
 
-Se puede observar el rectificador en la entrada del optoacoplador, permitiendo el correcto funcionamiento del mismo, juto con la salida nalógica aisalda. En este caso, la señal entregada es un hemiciclo de la señal senoidal utilziada para alimentar la carga, y con valor "medio" de la señal original en 0.
+Se puede observar el rectificador en la entrada del optoacoplador, permitiendo el correcto funcionamiento del mismo, juto con la salida nalógica aisalda. En este caso, la señal entregada es un hemiciclo de la señal senoidal utilizada para alimentar la carga, y con valor "medio" de la señal original en 0.
 
 ## **3.1.3 Diseño del sensor de frecuencia y fase** 
 
