@@ -566,11 +566,13 @@ En la sección de "código", primero se le permite al usuario seleccionar el dis
 
 ## **4.1 Pruebas funcionales**  
 
-El desarrollo del trabajo se realizó durante el transcurso de 4 meses, donde se tomó la idea principal y subdividió en 4 partes, donde se continuaban agregando los módulos previemanete mencionados. A continucación se listan los distintos readme donde se indican los módulos implementados junto con un link al README donde se encuentra el link al vdeo mostrando el funcionamiento.
+El desarrollo del trabajo se realizó durante el transcurso de 4 meses, donde se tomó la idea principal y subdividió en 4 partes, en las que se continuaban agregando los módulos previemanete mencionados. A continucación se listan los distintos readme donde se indican los módulos implementados.
 
 - [README_TP2.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/SE_TP_1c2025_TP2/README.md) : Sensor de corriente y  tensión, Módulo Display 16x2 y RTC
 - [README_TP3.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/Entregas-TP-Final/README.md) : Sensor de frecuncia y fase, Módulo SD
 - [README_TP_FINAL.md](https://github.com/norfanudis/SE_TP_1c2025_Entregas_TP/blob/Entrega-TP-Final-Rev1/README.md) : Módulo Bluetooth, aplicación celular
+
+ Junto con el link al [video](https://drive.google.com/file/d/1sq7Mj2O91dZLGVSDQ7my_pVvpUdaSsIS/view) mostrando el funcionamiento del trabajo final.
 
 ## **4.2 Cumplimiento de requisitos**  
 
