@@ -1,3 +1,7 @@
+#ifndef RTC_H
+#define RTC_H
+
+
 #include "mbed.h"
 
 
@@ -5,4 +9,8 @@
 
 void RTCGetTime(char* RTCTime);
 
-void RTCSetTime(int year, int month, int day, int hour, int minute, int second );
+void RTCGetDate(char* RTCDate);
+
+void RTCSetTimeAndDate(int year, int month, int day, int hour, int minute, int second );
+
+#endif

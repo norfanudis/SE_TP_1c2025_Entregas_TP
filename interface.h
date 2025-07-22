@@ -1,8 +1,9 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#define  LOOPS_BETWEEN_MEASSUREMENTS 10     //Veces que loopea entre actualizaciones de mediciones 
-#define  TIME_BETWEEN_UPDATES 1000          //Tiempo entre actualizacion del LCD
+#define  SCREEN_UPDATES_VALUES 3     //Veces que loopea entre actualizaciones de mediciones 
+#define  SCREEN_UPDATES_POWER 3
+#define  TIME_BETWEEN_UPDATES 2000          //Tiempo entre actualizacion del LCD
 
 // -------------- Funciones publicas ---------------------
 
@@ -12,12 +13,20 @@ void lcdInit();
 
 void displayTime(void);
 
+void displayDate(void);
+
 void interfaceUpdate(void);
 
 void displayValues(float, float, float, float);
 
+void displayTimeAndDate(void);
+
+void displayPowerValues(float, float, float);
+
 void displayTimeAndPower(float, float);
 
 void userButtonInterrupt();
+
+void sdCardtimer();
 
 #endif

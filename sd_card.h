@@ -6,7 +6,7 @@
 //=====[Declaration of public defines]=========================================
 
 #define SD_CARD_FILENAME_MAX_LENGTH 32      //Cantidad maxima de caracteres del nombre del archivo
-#define FILE_NAME "log.txt"                 //Nombre del archivo 
+#define FILE_NAME "log"                 //Nombre del archivo 
 #define SDCARD_LINE_SIZE 55                 //Tamaño de la linea del log
 #define SDCARD_LINES_TO_PRINT 10            
 
@@ -16,6 +16,7 @@
 //=====[Declarations (prototypes) of public functions]=========================
 
 bool sdCardInit();
+bool sdCardInserted();
 void sdCardWriteLog(float, float, float, float);
 bool sdCardWriteFile( const char* fileName, const char* writeBuffer );
 bool sdCardReadFile( const char* fileName, char * readBuffer, int readBufferSize );

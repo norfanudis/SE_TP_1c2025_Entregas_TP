@@ -11,5 +11,7 @@ void floatToString(char* , float, int, int);
 
 void printToUSB(const char* str);
 
+void comunUSBStringRead( char* str, int strLength );
+
 
 #endif
